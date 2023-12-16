@@ -1,16 +1,24 @@
 package My_Dictonary_package;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.*;
 
 import static My_Dictonary_package.dictonary_application.*;
 import static My_Dictonary_package.method_for_dictionary.infinityAddRandomWordPart1;
 
-class Word {
+class  Word implements Serializable {
+
+
+    @Serial
+    private static final long serialVersionUID = 7470618750420725594L;
     Map.Entry<String, String[]> wordAndTranslate;
     int progressWord;
 
     public Word(Map.Entry<String, String[]> wordAndTranslate) {
         this.wordAndTranslate = wordAndTranslate;
+        this.progressWord = 0;
+
     }
 
     public Word(Map.Entry<String, String[]> wordAndTranslate, int progressWord) {
@@ -24,6 +32,20 @@ class Word {
                 wordAndTranslate.getKey() + " " + Arrays.toString(wordAndTranslate.getValue()) +
                         ", progressWord=" + progressWord +
                         '}';
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Word word = (Word) o;
+        return Objects.equals(wordAndTranslate, word.wordAndTranslate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(wordAndTranslate);
     }
 
     int increaseValue(){
