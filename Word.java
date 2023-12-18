@@ -49,12 +49,12 @@ class  Word implements Serializable {
     }
 
     int increaseValue(){
-      progressWord+=stepSize;
-      if(progressWord>=100){
-          progressWord = 100;
-          return progressWord;
-      }
-      else return progressWord;
+        progressWord+=stepSize;
+        if(progressWord>=100){
+            progressWord = 100;
+            return progressWord;
+        }
+        else return progressWord;
     };
 
     int decreaseValue(){

@@ -10,31 +10,43 @@ public class method_for_dictionary {
     public static void toStringMapEntry(Map.Entry<String, String[]> entry){
         System.out.println(entry.getKey() + " " + Arrays.toString(entry.getValue()));
     }
-    public static Map.Entry<String, String[]> getCoupleKeyValue(int justNumber){
+//    public static Map.Entry<String, String[]> getCoupleKeyValue(int justNumber){
+//        Iterator<Map.Entry<String, String[]>> iterator = dictonary_application.hashMapAllWord.entrySet().iterator();
+//
+//        for (int i=0; i< justNumber; i++) {
+//            iterator.next();
+//        };
+//        return iterator.next();
+//    }
+
+    public static String getKey(int justNumber){
         Iterator<Map.Entry<String, String[]>> iterator = dictonary_application.hashMapAllWord.entrySet().iterator();
 
-        for (int i=0; i< justNumber; i++) {
-            iterator.next();
-        };
-        return iterator.next();
+        String [] arrayKey = hashMapAllWord.keySet().toArray(new String[hashMapAllWord.size()]);
+       // String [][] arrayValue = hashMapAllWord.values().toArray(new String[hashMapAllWord.size()][]);
+  return arrayKey[justNumber];
+
     }
 
-    public static Map.Entry<String, String[]> getCoupleKeyValue2(int justNumber){
-        Iterator<Map.Entry<String, String[]>> iterator = dictonary_application.hashMapAllWord.entrySet().iterator();
+    public static String[] getValue(int justNumber){
 
-        for (int i=0; i< justNumber; i++) {
-            iterator.next();
-        };
-        Map.Entry<String, String[]> entry1 = new AbstractMap.SimpleEntry<>("Thank you", new String[]{"Спасибо", "Благодарю"});
-        Map.Entry<String, String[]> entry2 = iterator.next();
-       boolean b = entry2.equals(entry1);
-      //  System.out.println(b);
-        return entry2;
+        String [][] arrayValue = hashMapAllWord.values().toArray(new String[hashMapAllWord.size()][]);
+
+        return arrayValue[justNumber];
     }
 
 
 
-    static void addSpecificWord(String word){
+
+
+
+
+
+
+
+
+
+    static void addSpecificWord(String word) throws IOException {
         boolean isWordInListWords = false;
         for (Word w:listWord ){
             if(w.wordAndTranslate.getKey().equals(word)){
@@ -47,16 +59,18 @@ public class method_for_dictionary {
 
 
         for(Map.Entry<String, String[]> entry:hashMapAllWord.entrySet()) {
-          //  System.out.println(entry.getKey());
+            //  System.out.println(entry.getKey());
             if (word.equals(entry.getKey())) {
                 String[] translate = entry.getValue();
                 Map.Entry<String, String[]> entry2 = new AbstractMap.SimpleEntry<>(word, translate);
-                listWord.add(new Word(entry2));
+                Word w1 = new Word(entry2);
+                listWord.add(w1);
+                oosOneEntry.writeObject(w1);
                 System.out.println("Слово " + word + " было добавлено в словарь");
                 return;
             }
         }
-            System.out.println("Кажется в нашей базе нет слова " + word);
+        System.out.println("Кажется в нашей базе нет слова " + word);
 
     }
 
@@ -86,7 +100,7 @@ public class method_for_dictionary {
     }
 
 
-    static void addSpecificWord(String word, String [] translate){
+    static void addSpecificWord(String word, String [] translate) throws IOException {
         boolean isWordInListWords = false;
         for (Word w:listWord ){
             if(w.wordAndTranslate.getKey().equals(word)){
@@ -94,61 +108,54 @@ public class method_for_dictionary {
                 System.out.println("Слово " + word + " уже есть в словаре");
                 return;
             }}
-            Map.Entry<String, String[]> entry = new AbstractMap.SimpleEntry<>(word, translate);
-            Word w1 = new Word(entry);
-            w1.progressWord = 0;
-            listWord.add(w1);
-            System.out.println("Слово " + word + " с вашим переводом " + translate + " было добавлено в словарь");
+        Map.Entry<String, String[]> entry = new AbstractMap.SimpleEntry<>(word, translate);
+        Word w1 = new Word(entry);
+        w1.progressWord = 0;
+        listWord.add(w1);
+        oosOneEntry.writeObject(w1);
+        System.out.println("Слово " + word + " с вашим переводом " + translate + " было добавлено в словарь");
 
     }
 
 
-
-static Word w10;
-
-    static Map.Entry<String, String[]> test() throws InterruptedException {
-
-
-      Map.Entry<String, String[]> entry = getCoupleKeyValue2(r.nextInt(hashMapAllWord.size()));
-       // Map.Entry<String, String[]> entry = new AbstractMap.SimpleEntry<>("test", new String[]{"zaza"});
-            //w10 = new Word(entry, 0);
-          //  listWord.add(new Word(entry, 0));
-            return  entry;
-    }
-   static void infinityAddRandomWordPart1() throws InterruptedException {
+    static void infinityAddRandomWordPart1() throws InterruptedException {
         boolean containWord = false;
-
-        Map.Entry<String, String[]> entry = getCoupleKeyValue(r.nextInt(hashMapAllWord.size()));
+        int random_int = r.nextInt(hashMapAllWord.size());
+        String key = getKey(random_int);
+        String [] value = getValue(random_int);
         for (Word w:listWord){
-            if(w.wordAndTranslate.getKey().equals(entry.getKey())){
+            if(w.wordAndTranslate.getKey().equals(key)){
                 containWord = true;
             }
         }
         if(containWord==false){
+            Map.Entry<String, String[]> entry = new AbstractMap.SimpleEntry<>(key, value);
             listWord.add(new Word(entry));
             System.out.println("Было добавлено слово " + entry.getKey());
             return;
         }
         else {
-            System.out.println("Не получилось добавить слово " + entry.getKey());
-          //  Thread.sleep(1);
-          //  Thread.sleep(25);
+            System.out.println("Не получилось добавить слово " + key);
+            //  Thread.sleep(1);
+             Thread.sleep(25);
 
             try {
                 infinityAddRandomWordPart1();
             }
             catch (StackOverflowError e){
                 System.out.println("!!!!!!!!!");
-              //  Thread.sleep(500);
+                  Thread.sleep(500);
             }
 
         }
 
     }
     public static Map.Entry<String, String[]> infinityAddRandomWordPart1(List <Map.Entry<String, String[]>> entryList) throws InterruptedException {
+        int random_int = r.nextInt(hashMapAllWord.size());
+        String key = getKey(random_int);
+        String [] value = getValue(random_int);
 
-
-        Map.Entry<String, String[]> entry = getCoupleKeyValue(r.nextInt(hashMapAllWord.size()));
+        Map.Entry<String, String[]> entry = new AbstractMap.SimpleEntry<>(key, value);
         if(!entryList.contains(entry)){entryList.add(entry);
             System.out.println("Было добавлено слово " + entry.getKey());
             return entry;
@@ -174,7 +181,11 @@ static Word w10;
     public static Map.Entry<String, String[]> infinityAddRandomWordPart1(List <Map.Entry<String, String[]>> entryList, Map.Entry<String, String[]> keyWord) throws InterruptedException {
 
 
-        Map.Entry<String, String[]> entry = getCoupleKeyValue(r.nextInt(hashMapAllWord.size()));
+        int random_int = r.nextInt(hashMapAllWord.size());
+        String key = getKey(random_int);
+        String [] value = getValue(random_int);
+
+        Map.Entry<String, String[]> entry = new AbstractMap.SimpleEntry<>(key, value);
         if(!entryList.contains(entry)){entryList.add(entry);
             System.out.println("Было добавлено слово " + entry.getKey());
             return entry;
@@ -226,7 +237,7 @@ static Word w10;
 
                 }
 
-            thread1.interrupt();
+                thread1.interrupt();
 
 
             }
@@ -239,44 +250,43 @@ static Word w10;
         thread2.interrupt();
         System.out.println("Мы ждали какое-то время, но метод не завершился"); // кажется не корректно работает
 
+    }
+
+    static void saveListWords() throws IOException {
+
+        oosAllFile.writeInt(listWord.size());
+        for(Word w:listWord){
+            oosAllFile.writeObject(w);
         }
+        oosAllFile.close();
 
-        static void saveListWords() throws IOException {
-            FileOutputStream fileOutputStream = new FileOutputStream(fileName);
-            ObjectOutputStream objectOutputStream1= new ObjectOutputStream(fileOutputStream);
-            objectOutputStream1.writeInt(listWord.size());
-            for(Word w:listWord){
-                objectOutputStream1.writeObject(w);
-            }
-            objectOutputStream1.close();
+    }
+
+    static void loadListWord() throws IOException, ClassNotFoundException {
+        FileInputStream fileInputStream = new FileInputStream(fileName);
+        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+        int listWordSize = objectInputStream.readInt();
+        listWord.removeAll(listWord);
+        for(int i=0; i< listWordSize; i++){
+            listWord.add((Word) objectInputStream.readObject());
 
         }
-
-        static void loadListWord() throws IOException, ClassNotFoundException {
-            FileInputStream fileInputStream = new FileInputStream(fileName);
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-            int listWordSize = objectInputStream.readInt();
-            listWord.removeAll(listWord);
-            for(int i=0; i< listWordSize; i++){
-                listWord.add((Word) objectInputStream.readObject());
-
-            }
-            objectInputStream.close();
-        }
+        objectInputStream.close();
+    }
 
 
-    static void playSimpleMod() throws InterruptedException {
+    static void playSimpleMod() throws InterruptedException, IOException {
         Collections.shuffle(listWord);
         for(int i=0; i<listWord.size(); i++){
-        listWord.get(i).oneWordHandling();
+            listWord.get(i).oneWordHandling();
         }
-
-
-
-    }
+        saveListWords();
 
 
     }
+
+
+}
 
 
 
