@@ -18,51 +18,17 @@ public class dictonary_application {
     static Scanner scanner = new Scanner(System.in);
     //   public static List<Map.Entry<String, String[]>> listPartOfWords = new ArrayList<>();
     static List<Word> listWord = new ArrayList<>();
-    static String fileName = "MyWords.bin";
+    static String fileNameAllWords; //имя файла в котором содержатса все слова
+    static String fileName = "MyTextWords.txt"; //имя файда в котором содержатся слова которые добавил в свой словарь пользователь
     static String fileLength = "length.bin";
     static String nameTest = "Test Write.bin";
+    static String delimetr = ",,-,,";
+    static String delimetrForArray = ",";
+    static  String endArray = ",,,";
+    static String  delimetr_WordAndProgres ="---";
 
 
     static List<Word> copyListWords =  new ArrayList<>(listWord);
-
-//   static FileOutputStream fosAllFile;
-//
-//    static {
-//        try {
-//            fosAllFile = new FileOutputStream(fileName);
-//        } catch (FileNotFoundException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-//
-//    static  ObjectOutputStream oosAllFile;
-//
-//    static {
-//        try {
-//            oosAllFile = new ObjectOutputStream(fosAllFile);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-//    static FileOutputStream fosOneEntry;
-//
-//    static {
-//        try {
-//            fosOneEntry = new FileOutputStream(fileName);
-//        } catch (FileNotFoundException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-//    static ObjectOutputStream oosOneEntry;
-//
-//    static {
-//        try {
-//            oosOneEntry = new ObjectOutputStream(fosOneEntry);
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-
 
 
     public static  int stepSize = 4;
@@ -104,20 +70,25 @@ public class dictonary_application {
     public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
 
 
+//addSpecificWord("Laptop", new String[]{"Ноутбук"});
 
+//addMuchWords(5);
 
-
+//saveListWords();
+playSimpleMod();
 //addSpecificWord("Water");
 //addSpecificWord("Computer");
 //addSpecificWord("Beautiful");
-       // addSpecificWord("Dance");
-       // loadListWord();
-    // System.out.println(listWord);
-deleteWord("Water");
-      //  writeLength();
+//addSpecificWord("Dance");
+      //  playSimpleMod();
+//
+//        System.out.println(listWord);
+//deleteWord("Water");
+//addMuchWords(10);
 
-//saveListWords();
-      //  System.out.println(listWord);
+
+        System.out.println(listWord.get(2).oneWordHandling());
+       // сleanFile();
 
 
 

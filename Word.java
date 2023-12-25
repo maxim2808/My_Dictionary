@@ -66,7 +66,7 @@ class  Word implements Serializable {
         else  return progressWord;
 
     }
-    public boolean oneWordHandling() throws InterruptedException {
+        public boolean oneWordHandling() throws InterruptedException {
         System.out.println("chooseWord is starting");
         List<Map.Entry<String, String[]>> entryList = new ArrayList<>();
         Map.Entry <String, String[]> rightCouple = this.wordAndTranslate;
@@ -75,31 +75,71 @@ class  Word implements Serializable {
 
             infinityAddRandomWordPart1(entryList, rightCouple);
         }
-
+        List<WordFromCheck> listWordFromChek = new ArrayList<>();
         Collections.shuffle(entryList);
         System.out.println("\n" + "Найдите перевод");
         System.out.println(Arrays.toString(rightCouple.getValue() ) + "\n");
+        int index;
+            List<WordFromCheck> listOneTrueWord = new ArrayList<>();
         for(int i=0; i<numberOfSuggestedWords; i++){
             //infinityAddRandomWordPart1(entryList);
             //toStringMapEntry(entryList.get(i));
-            System.out.println(entryList.get(i).getKey());
-        }
-        return checkWord(rightCouple);
+            index = i+1;
 
+            if(rightCouple.getKey().equals(entryList.get(i).getKey())){
+                WordFromCheck w = new WordFromCheck(entryList.get(i), true, index);
+                listWordFromChek.add(w);
+                listOneTrueWord.add(w);
+            }
+            else listWordFromChek.add(new WordFromCheck(entryList.get(i), false, index));
+
+            System.out.println((index)+"."+entryList.get(i).getKey());
+        }
+        //return checkWord(rightCouple);
+             List <List<WordFromCheck>> twoList = new ArrayList<>();
+        twoList.add(listWordFromChek);
+        twoList.add(listOneTrueWord);
+    //return twoList;
+            return checkWord(twoList);
 
     }
-    private boolean checkWord(Map.Entry<String, String[]> rightCouple){
+//    public boolean oneWordHandling() throws InterruptedException {
+//        System.out.println("chooseWord is starting");
+//        List<Map.Entry<String, String[]>> entryList = new ArrayList<>();
+//        Map.Entry <String, String[]> rightCouple = this.wordAndTranslate;
+//        entryList.add(rightCouple);
+//        for(int i=0; i<numberOfSuggestedWords-1; i++){
+//
+//            infinityAddRandomWordPart1(entryList, rightCouple);
+//        }
+//
+//        Collections.shuffle(entryList);
+//        System.out.println("\n" + "Найдите перевод");
+//        System.out.println(Arrays.toString(rightCouple.getValue() ) + "\n");
+//        for(int i=0; i<numberOfSuggestedWords; i++){
+//            //infinityAddRandomWordPart1(entryList);
+//            //toStringMapEntry(entryList.get(i));
+//            System.out.println((i+1)+"."+entryList.get(i).getKey());
+//        }
+//        return checkWord(rightCouple);
+//
+//
+//    }
+    private boolean checkWord(List <List<WordFromCheck>> listWordFromCheck){
         System.out.println("Please, enter a word");
-        String enteredWord = scanner.nextLine();
-        if(enteredWord.equals(rightCouple.getKey())){
+        String enteredWord = scanner.nextLine().toLowerCase();
+        WordFromCheck trueWord = listWordFromCheck.get(1).get(0);
+        Map.Entry<String, String[]> rightCouple = trueWord.getEntry();
+        if(enteredWord.equals(rightCouple.getKey().toLowerCase())||enteredWord.equals(String.valueOf(trueWord.index))){
             System.out.println("Вы правы, правильное слово " + rightCouple.getKey());
             increaseValue();
             return true;
         }
+
         else{
             System.out.println("Неверный ответ");
             decreaseValue();
-            return checkWord(rightCouple);
+            return checkWord(listWordFromCheck);
         }
 
     };
