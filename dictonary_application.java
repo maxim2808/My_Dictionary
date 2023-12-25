@@ -3,10 +3,10 @@ package My_Dictonary_package;
 import org.w3c.dom.ls.LSOutput;
 
 import java.io.*;
+import java.sql.SQLOutput;
 import java.util.*;
 
-import static My_Dictonary_package.ForFile.readLengh;
-import static My_Dictonary_package.ForFile.writeLength;
+import static My_Dictonary_package.ForFile.*;
 import static My_Dictonary_package.method_for_dictionary.*;
 
 public class dictonary_application {
@@ -18,49 +18,50 @@ public class dictonary_application {
     static Scanner scanner = new Scanner(System.in);
     //   public static List<Map.Entry<String, String[]>> listPartOfWords = new ArrayList<>();
     static List<Word> listWord = new ArrayList<>();
-    static String fileName = "My Words.bin";
-    static String fileLength = "length.txt";
+    static String fileName = "MyWords.bin";
+    static String fileLength = "length.bin";
+    static String nameTest = "Test Write.bin";
 
 
     static List<Word> copyListWords =  new ArrayList<>(listWord);
 
-   static FileOutputStream fosAllFile;
-
-    static {
-        try {
-            fosAllFile = new FileOutputStream(fileName);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    static  ObjectOutputStream oosAllFile;
-
-    static {
-        try {
-            oosAllFile = new ObjectOutputStream(fosAllFile);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    static FileOutputStream fosOneEntry;
-
-    static {
-        try {
-            fosOneEntry = new FileOutputStream(fileName);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    static ObjectOutputStream oosOneEntry;
-
-    static {
-        try {
-            oosOneEntry = new ObjectOutputStream(fosOneEntry);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+//   static FileOutputStream fosAllFile;
+//
+//    static {
+//        try {
+//            fosAllFile = new FileOutputStream(fileName);
+//        } catch (FileNotFoundException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
+//
+//    static  ObjectOutputStream oosAllFile;
+//
+//    static {
+//        try {
+//            oosAllFile = new ObjectOutputStream(fosAllFile);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
+//    static FileOutputStream fosOneEntry;
+//
+//    static {
+//        try {
+//            fosOneEntry = new FileOutputStream(fileName);
+//        } catch (FileNotFoundException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
+//    static ObjectOutputStream oosOneEntry;
+//
+//    static {
+//        try {
+//            oosOneEntry = new ObjectOutputStream(fosOneEntry);
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
 
 
@@ -89,35 +90,36 @@ public class dictonary_application {
             hashMapAllWord.put(listKeyAndValue.get(i)[0], listKeyAndValue.get(i)[1].split(","));
 
         }
-
+//        try {
+//            loadListWord();
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        } catch (ClassNotFoundException e) {
+//            throw new RuntimeException(e);
+//        }
     }
 
 
 
     public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
-//        addMuchWords(3);
-//        saveListWords();
-//        //getCoupleKeyValue(1);
-//        playSimpleMod();
-//        System.out.println(listWord);
-//        saveListWords();
 
 
-        addSpecificWord("Water");
-        addSpecificWord("Beautiful");
-        writeLength();
-        System.out.println(readLengh());
+
+
+
+//addSpecificWord("Water");
+//addSpecificWord("Computer");
+//addSpecificWord("Beautiful");
+       // addSpecificWord("Dance");
        // loadListWord();
-//        saveListWords();
-//        System.out.println(listWord);
-//        loadListWord();
-//        //playSimpleMod();
-//
-//        System.out.println(listWord);
-       // playSimpleMod();
+    // System.out.println(listWord);
+deleteWord("Water");
+      //  writeLength();
 
-        //playSimpleMod();
-        //System.out.println(hashMapAllWord);
+//saveListWords();
+      //  System.out.println(listWord);
+
+
 
     }
 

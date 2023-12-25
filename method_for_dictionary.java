@@ -3,6 +3,7 @@ package My_Dictonary_package;
 import java.io.*;
 import java.util.*;
 
+import static My_Dictonary_package.ForFile.*;
 import static My_Dictonary_package.dictonary_application.*;
 
 public class method_for_dictionary {
@@ -40,17 +41,33 @@ public class method_for_dictionary {
 
 
 
+    static void deleteWord(String word) throws IOException, ClassNotFoundException {
 
-
-
-
-
-
-    static void addSpecificWord(String word) throws IOException {
-        boolean isWordInListWords = false;
+        loadListWord();
         for (Word w:listWord ){
             if(w.wordAndTranslate.getKey().equals(word)){
-                isWordInListWords =true;
+                listWord.remove(w);
+                System.out.println("Слово  " + word + " было удалено ");
+                saveListWords();
+                return;
+            }
+        }
+        System.out.println("Не было найдено слово " + word);
+
+
+    }
+
+
+
+
+
+
+    static void addSpecificWord(String word) throws IOException, ClassNotFoundException {
+       // boolean isWordInListWords = false;
+        loadListWord();
+        for (Word w:listWord ){
+            if(w.wordAndTranslate.getKey().equals(word)){
+              //  isWordInListWords =true;
                 System.out.println("Слово " + word + " уже есть в словаре");
                 return;
             }
@@ -65,7 +82,7 @@ public class method_for_dictionary {
                 Map.Entry<String, String[]> entry2 = new AbstractMap.SimpleEntry<>(word, translate);
                 Word w1 = new Word(entry2);
                 listWord.add(w1);
-                oosOneEntry.writeObject(w1);
+                saveListWords();
                 System.out.println("Слово " + word + " было добавлено в словарь");
                 return;
             }
@@ -112,7 +129,10 @@ public class method_for_dictionary {
         Word w1 = new Word(entry);
         w1.progressWord = 0;
         listWord.add(w1);
-        oosOneEntry.writeObject(w1);
+        FileOutputStream fileOutputStream = new FileOutputStream(fileName, true);
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+
+        objectOutputStream.writeObject(w1);
         System.out.println("Слово " + word + " с вашим переводом " + translate + " было добавлено в словарь");
 
     }
@@ -252,27 +272,9 @@ public class method_for_dictionary {
 
     }
 
-    static void saveListWords() throws IOException {
 
-        oosAllFile.writeInt(listWord.size());
-        for(Word w:listWord){
-            oosAllFile.writeObject(w);
-        }
-        oosAllFile.close();
 
-    }
 
-    static void loadListWord() throws IOException, ClassNotFoundException {
-        FileInputStream fileInputStream = new FileInputStream(fileName);
-        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-        int listWordSize = objectInputStream.readInt();
-        listWord.removeAll(listWord);
-        for(int i=0; i< listWordSize; i++){
-            listWord.add((Word) objectInputStream.readObject());
-
-        }
-        objectInputStream.close();
-    }
 
 
     static void playSimpleMod() throws InterruptedException, IOException {
