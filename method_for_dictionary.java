@@ -36,7 +36,32 @@ public class method_for_dictionary {
         return arrayValue[justNumber];
     }
 
+    static void сnagheWord(String word) throws IOException, ClassNotFoundException {
 
+        readAllFile();
+        for (int i=0; i<listWord.size(); i++){
+            if(listWord.get(i).wordAndTranslate.getKey().toLowerCase().equals(word.toLowerCase())){
+                System.out.println("Вы хотите изменить слово " + listWord.get(i).wordAndTranslate.getKey() +
+                        " или перевод к нему? Введите\n1.Только слово \n2.Только перевод\n3.И слово и перевод\n4.Отмена "); //Доделать механизм изменения слова
+                System.out.println("Введите новое слово");
+                String key = scanner.nextLine();
+                System.out.println("Введите новый перевод"); //доделать ввод массива через сканер
+                String valueScan = scanner.nextLine();
+                String [] value = new String[]{valueScan};
+                Map.Entry<String, String[]> entry = new AbstractMap.SimpleEntry<>(key, value);
+                Word newWord = new Word(entry);
+                listWord.set(i, newWord);
+                saveListWords();
+                return;
+            }
+
+
+        }
+
+        System.out.println("Не было найдено слово " + word);
+
+
+    }
 
 
 
@@ -274,9 +299,6 @@ public class method_for_dictionary {
 
 
 
-
-
-
     public static void addMuchWords(int number) throws InterruptedException, IOException {
         Thread thread1 = new Thread(new Runnable() {
             @Override
@@ -325,12 +347,16 @@ public class method_for_dictionary {
 
     static void playSimpleMod() throws InterruptedException, IOException {
         readAllFile();
+        numberOfCorrectAnswers = 0;
+        numberOfIncorrectAnswers = 0;
         Collections.shuffle(listWord);
+        System.out.println("Тест начался");
         for(int i=0; i<listWord.size(); i++){
             listWord.get(i).oneWordHandling();
         }
-        saveListWords();
 
+        saveListWords();
+        System.out.println("Тест закончен, количество правильных ответов " + numberOfCorrectAnswers + " количество неправильных ответов " + numberOfIncorrectAnswers);
 
     }
 

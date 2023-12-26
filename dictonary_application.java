@@ -26,6 +26,9 @@ public class dictonary_application {
     static String delimetrForArray = ",";
     static  String endArray = ",,,";
     static String  delimetr_WordAndProgres ="---";
+    static int numberOfCorrectAnswers;
+    static int numberOfIncorrectAnswers;
+
 
 
     static List<Word> copyListWords =  new ArrayList<>(listWord);
@@ -70,12 +73,15 @@ public class dictonary_application {
     public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
 
 
+        сnagheWord("beautiful");
+        readAllFile();
+        System.out.println(listWord);
 //addSpecificWord("Laptop", new String[]{"Ноутбук"});
 
 //addMuchWords(5);
 
 //saveListWords();
-playSimpleMod();
+//playSimpleMod();
 //addSpecificWord("Water");
 //addSpecificWord("Computer");
 //addSpecificWord("Beautiful");
@@ -87,7 +93,7 @@ playSimpleMod();
 //addMuchWords(10);
 
 
-        System.out.println(listWord.get(2).oneWordHandling());
+       // System.out.println(listWord.get(2).oneWordHandling());
        // сleanFile();
 
 

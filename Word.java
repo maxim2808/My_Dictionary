@@ -133,14 +133,22 @@ class  Word implements Serializable {
         if(enteredWord.equals(rightCouple.getKey().toLowerCase())||enteredWord.equals(String.valueOf(trueWord.index))){
             System.out.println("Вы правы, правильное слово " + rightCouple.getKey());
             increaseValue();
+            numberOfCorrectAnswers++;
             return true;
         }
-
-        else{
-            System.out.println("Неверный ответ");
-            decreaseValue();
-            return checkWord(listWordFromCheck);
+        List <WordFromCheck> listAllChekWord = listWordFromCheck.get(0);
+        for (WordFromCheck wfch:listAllChekWord){
+            if (enteredWord.equals(wfch.getEntry().getKey().toLowerCase())||enteredWord.equals(String.valueOf(wfch.index))){
+                System.out.println("Неверный ответ, попробуйте ещё раз");
+                decreaseValue();
+                numberOfIncorrectAnswers++;
+                return checkWord(listWordFromCheck);
+            }
         }
+            System.out.println("Нет такого слова, попробуйте еще раз");
+            //decreaseValue();
+            return checkWord(listWordFromCheck);
+
 
     };
 
