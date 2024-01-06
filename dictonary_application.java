@@ -73,7 +73,7 @@ public class dictonary_application {
     public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
 
 
-        сnagheWord("beautiful");
+        сnagheWord("superplay");
         readAllFile();
         System.out.println(listWord);
 //addSpecificWord("Laptop", new String[]{"Ноутбук"});

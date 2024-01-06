@@ -36,6 +36,39 @@ public class method_for_dictionary {
         return arrayValue[justNumber];
     }
 
+    static String[] transformingLineToArray(String line){
+        String line_without_space = line.replaceAll("(\\s+)*,\\s+", ",");
+        String [] array = line_without_space.split(",");
+        return array;
+    }
+    static Word onlyKey(String [] value, int progress){
+        Scanner scanner1 = new Scanner(System.in);
+        System.out.println("Введите новое слово");
+        String key = scanner1.nextLine();
+        Map.Entry<String, String[]> entry = new AbstractMap.SimpleEntry<>(key, value);
+        Word word = new Word(entry, progress);
+        return word;
+    }
+    static Word onlyValue(String key, int progress){
+        Scanner scanner1 = new Scanner(System.in);
+        System.out.println("Введите новый перевод (разделяйте слова запяой)");
+        String valueScan = scanner1.nextLine();
+        Map.Entry<String, String[]> entry = new AbstractMap.SimpleEntry<>(key, transformingLineToArray(valueScan));
+        Word word = new Word(entry, progress);
+        return word;
+    }
+
+    static Word keyAndValue(int progress){
+        Scanner scanner1 = new Scanner(System.in);
+        System.out.println("Введите новое слово");
+        String key = scanner1.nextLine();
+        System.out.println("Введите новый перевод (разделяйте слова запяой)");
+        String valueScan = scanner1.nextLine();
+        Map.Entry<String, String[]> entry = new AbstractMap.SimpleEntry<>(key, transformingLineToArray(valueScan));
+        Word word = new Word(entry, progress);
+        return word;
+    }
+
     static void сnagheWord(String word) throws IOException, ClassNotFoundException {
 
         readAllFile();
@@ -43,16 +76,41 @@ public class method_for_dictionary {
             if(listWord.get(i).wordAndTranslate.getKey().toLowerCase().equals(word.toLowerCase())){
                 System.out.println("Вы хотите изменить слово " + listWord.get(i).wordAndTranslate.getKey() +
                         " или перевод к нему? Введите\n1.Только слово \n2.Только перевод\n3.И слово и перевод\n4.Отмена "); //Доделать механизм изменения слова
-                System.out.println("Введите новое слово");
-                String key = scanner.nextLine();
-                System.out.println("Введите новый перевод"); //доделать ввод массива через сканер
-                String valueScan = scanner.nextLine();
-                String [] value = new String[]{valueScan};
-                Map.Entry<String, String[]> entry = new AbstractMap.SimpleEntry<>(key, value);
-                Word newWord = new Word(entry);
-                listWord.set(i, newWord);
-                saveListWords();
+//progres word должен сохраняться
+                Word wordFromList = listWord.get(i);
+                int action;
+                try {
+                     action = scanner.nextInt();
+                }
+                catch (InputMismatchException e){
+                    action= 9;
+                }
+
+                switch (action){
+                    case 1:
+                        listWord.set(i, onlyKey(wordFromList.wordAndTranslate.getValue(),wordFromList.progressWord));
+                        saveListWords();
+                        break;
+                    case 2:
+                        listWord.set(i, onlyValue(wordFromList.wordAndTranslate.getKey(), wordFromList.progressWord));
+                        saveListWords();
+                        break;
+                    case 3:
+                        listWord.set(i, keyAndValue(wordFromList.progressWord));
+                        saveListWords();
+                        break;
+                    case 4:
+                        System.out.println("Отмена действия");
+                        break;
+
+                    default:
+                        System.out.println("Неизвестное значение");
+
+                }
+
+
                 return;
+
             }
 
 
