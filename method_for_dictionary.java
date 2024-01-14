@@ -403,20 +403,73 @@ public class method_for_dictionary {
 
 
 
-    static void playSimpleMod() throws InterruptedException, IOException {
+    static void playSimpleModKey() throws InterruptedException, IOException {
+
         readAllFile();
-        numberOfCorrectAnswers = 0;
+        numberOfCorrectWords = 0;
         numberOfIncorrectAnswers = 0;
         Collections.shuffle(listWord);
         System.out.println("Тест начался");
         for(int i=0; i<listWord.size(); i++){
-            listWord.get(i).oneWordHandling();
+            listWord.get(i).oneWordHandlingFindKeyOrValue(1);
         }
 
         saveListWords();
-        System.out.println("Тест закончен, количество правильных ответов " + numberOfCorrectAnswers + " количество неправильных ответов " + numberOfIncorrectAnswers);
+        System.out.println("Тест закончен, количество правильных ответов " + numberOfCorrectWords + " количество неправильных ответов " + numberOfIncorrectAnswers);
 
     }
+
+    static void playSimpleModValue() throws InterruptedException, IOException {
+
+        readAllFile();
+        numberOfCorrectWords = 0;
+        numberOfIncorrectAnswers = 0;
+        Collections.shuffle(listWord);
+        System.out.println("Тест начался");
+        for(int i=0; i<listWord.size(); i++){
+            listWord.get(i).oneWordHandlingFindKeyOrValue(2);
+        }
+
+        saveListWords();
+        System.out.println("Тест закончен, количество правильных ответов " + numberOfCorrectWords + " количество неправильных ответов " + numberOfIncorrectAnswers);
+
+    }
+    static void playAdvancedModKey() throws InterruptedException, IOException {
+
+        readAllFile();
+        numberOfCorrectWords = 0;
+        numberOfIncorrectWords = 0;
+        numberOfIncorrectAnswers = 0;
+        Collections.shuffle(listWord);
+        System.out.println("Тест начался");
+        for(int i=0; i<listWord.size(); i++){
+         listWord.get(i).oneWordHandlingKeyForDifficultMethod();
+        }
+
+        saveListWords();
+        System.out.println("Тест закончен, количество правильных ответов " + numberOfCorrectWords + " количество неправильных ответов " + numberOfIncorrectAnswers + " количнство неправильных слов " + numberOfIncorrectWords);
+
+    }
+
+    static void playAdvancedModValue() throws InterruptedException, IOException {
+
+        readAllFile();
+        numberOfCorrectWords = 0;
+        numberOfIncorrectWords = 0;
+        numberOfIncorrectAnswers = 0;
+        Collections.shuffle(listWord);
+        System.out.println("Тест начался");
+        for(int i=0; i<listWord.size(); i++){
+            listWord.get(i).oneWordHandlingValueForDifficultMethod();
+        }
+
+        saveListWords();
+        System.out.println("Тест закончен, количество правильных ответов " + numberOfCorrectWords + " количество неправильных ответов " + numberOfIncorrectAnswers + " количнство неправильных слов " + numberOfIncorrectWords);
+
+    }
+
+
+
 
 
 }

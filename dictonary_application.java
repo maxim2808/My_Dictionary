@@ -1,9 +1,6 @@
 package My_Dictonary_package;
 
-import org.w3c.dom.ls.LSOutput;
-
 import java.io.*;
-import java.sql.SQLOutput;
 import java.util.*;
 
 import static My_Dictonary_package.ForFile.*;
@@ -26,9 +23,10 @@ public class dictonary_application {
     static String delimetrForArray = ",";
     static  String endArray = ",,,";
     static String  delimetr_WordAndProgres ="---";
-    static int numberOfCorrectAnswers;
+    static int numberOfCorrectWords;
     static int numberOfIncorrectAnswers;
-
+    static int numberOfIncorrectWords;
+    static int basicWordNumberNumber = 0;
 
 
     static List<Word> copyListWords =  new ArrayList<>(listWord);
@@ -73,9 +71,22 @@ public class dictonary_application {
     public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
 
 
-        сnagheWord("superplay");
-        readAllFile();
-        System.out.println(listWord);
+      //  playSimpleModKey();
+
+
+// playAdvancedModKey();
+       playAdvancedModValue();
+//        Map.Entry<String, String[]> testEntry = new AbstractMap.SimpleEntry<>("Key", new String []{"ключ", "код","пароль", "Клювоч", "ключик", "клоуч", "пин-код"});
+//        Word testWord = new Word(testEntry);
+//        ;
+//        System.out.println(testWord.patrialReconcilationValue( "клюви", 2));
+
+
+//        readAllFile();
+//        System.out.println(listWord);
+//        сnagheWord("superplay");
+//        readAllFile();
+//        System.out.println(listWord);
 //addSpecificWord("Laptop", new String[]{"Ноутбук"});
 
 //addMuchWords(5);
