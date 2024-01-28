@@ -139,24 +139,84 @@ public class method_for_dictionary {
 
 
     }
+    static  boolean scanningForAddSpecicificWordPart2(String word){
+        System.out.println("Начало метода scanningForAddSpecicificWordPart2");
+        String scanner1or2Number2 = scanner.nextLine();
+        if (scanner1or2Number2.equals("1")){
+            listWord.add(onlyValue(word,0));
+        return true;
+
+        }
+        if(scanner1or2Number2.equals("2")){
+            System.out.println("Метод добавления слова завершен ");
+            return false;
+        }
+    else {
+            System.out.println("Неверное значение, поробуйте ещё раз");
+       return scanningForAddSpecicificWordPart2(word);
+    }
+    }
+
+    static  boolean scanningForAddSpecicificWordIfWordAbsentInFile(String word){
+        String scanner1or2Number2 = scanner.nextLine();
+        if (scanner1or2Number2.equals("1")){
+           // listWord.add(keyAndValue(0));
+            return true;
+
+        }
+        if(scanner1or2Number2.equals("2")){
+            System.out.println("Метод добавления слова завершен ");
+            return false;
+        }
+        else {
+            System.out.println("Неверное значение, поробуйте ещё раз");
+            return scanningForAddSpecicificWordPart2(word);
+        }
+    }
 
 
+    static  boolean scanningForAddSpecicificWord (Map.Entry<String, String[]> entry, boolean isCalled) throws IOException {
+        System.out.println("Начало метода scanningForAddSpecicificWord ");
+    String scanner1or2 = scanner.nextLine();
+    if(scanner1or2.equals("1")){
+        Map.Entry<String, String[]> entry2 = new AbstractMap.SimpleEntry<>(entry.getKey(), entry.getValue());
+        Word w1 = new Word(entry2);
+        System.out.println(" Слово " + entry.getKey() + " было добавоено в словарь ");
+        listWord.add(w1);
+        saveTextWord(w1);
+        System.out.println("scanningForAddSpecicificWord конец метода 1 ");
+        return true;
+    }
+   else if(scanner1or2.equals("2")){
+        System.out.println("Вы хотите ввестри перевод вручную? \n1.Да \n2.Нет ");
+        scanningForAddSpecicificWordPart2(entry.getKey());
+        System.out.println("scanningForAddSpecicificWord конец метода 2 ");
+        return true;
+    }
+    else {
+        return scanningForAddSpecicificWord(entry, isCalled);}
+
+}
 
 
-
-//Добавляет слово которое уже есть в общем списке
+//Добавляет новое слово
     static void addSpecificWord(String word) throws IOException, ClassNotFoundException {
-       // boolean isWordInListWords = false;
+
+
+      boolean scanningIsCalled= false;
         readAllFile();
         for (Word w:listWord ){
             if(w.wordAndTranslate.getKey().equals(word)){
-              //  isWordInListWords =true;
+
                 System.out.println("Слово " + word + " уже есть в словаре");
                 return;
             }
         }
+        if(fileLoaded==false){
+            loadAllWordsInList();
+        }
       for(Map.Entry<String, String[]> entry:hashMapAllWord.entrySet()) {
-            //  System.out.println(entry.getKey());
+
             if (word.equals(entry.getKey())) {
                 String[] translate = entry.getValue();
                 Map.Entry<String, String[]> entry2 = new AbstractMap.SimpleEntry<>(word, translate);
@@ -169,6 +229,31 @@ public class method_for_dictionary {
         }
         System.out.println("Кажется в нашей базе нет слова " + word);
 
+        for(Map.Entry<String, String[]> entry:hashMapAllWordsFromFile.entrySet()){
+            if(word.toLowerCase().equals(entry.getKey())){
+
+                System.out.println(entry.getKey() + "-" + Arrays.toString(entry.getValue()));
+                System.out.println("Вы хотите добавить это слово: \n1.Да \n2.Нет ");
+
+
+                scanningIsCalled=  scanningForAddSpecicificWord(entry, scanningIsCalled);
+
+            }
+
+
+        }
+        if(scanningIsCalled==false) {
+            System.out.println("Конец метода");
+            System.out.println("Вы хотите добавить новое слово вручную? \n1.Да \n2.Нет");
+
+            // Map.Entry<String, String[]> entry = new AbstractMap.SimpleEntry<>(word, transformingLineToArray(array));
+
+            boolean createNewWord = scanningForAddSpecicificWordIfWordAbsentInFile(word);
+            if (createNewWord == true) {
+                listWord.add(onlyValue(word, 0));
+                System.out.println("Добавление слова вручную завершенно");
+            }
+        }
     }
 
 //    static void addSpecificWord2(String word, List<Word> listWord){

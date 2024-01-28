@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 import static My_Dictonary_package.dictonary_application.*;
 
 public class ForFile {
+    static Pattern patternForAllWords = Pattern.compile("(.+)(\\[.*])(.+)(Войти)");
 
     static void saveListWords() throws IOException {
         сleanFile();
@@ -64,7 +65,45 @@ public class ForFile {
     }
 
 
+    static String getWordFromFile(String word) throws FileNotFoundException {
+        Scanner scannerGetWordFromFile = new Scanner(fileAllWordTxt);
+        boolean hasWord = false;
+        // Pattern pattern1 = Pattern.compile(word);
+        while (scannerGetWordFromFile.hasNextLine()){
+            String oneline = scannerGetWordFromFile.nextLine();
+            Matcher matcherOneLine1 = patternForAllWords.matcher(oneline);
+            while (matcherOneLine1.find()){
+                if(matcherOneLine1.group(1).strip().equals(word)){
+                    System.out.println(matcherOneLine1.group(1).strip() + "-" + matcherOneLine1.group(3).strip());
+                    return matcherOneLine1.group(1).strip();
+                }
 
+            }
+
+        }
+        System.out.println("Нет такого слова");
+        return null;
+
+    }
+
+    static void loadAllWordsInList() throws FileNotFoundException {
+        Scanner scannerGetWordFromFile = new Scanner(fileAllWordTxt);
+        while (scannerGetWordFromFile.hasNextLine()){
+            String oneline = scannerGetWordFromFile.nextLine();
+           // System.out.println(oneline);
+            Matcher matcherOneLine = patternForAllWords.matcher(oneline);
+            while (matcherOneLine.find()){
+
+                // System.out.println(matcherOneLine.group());
+                hashMapAllWordsFromFile.put(matcherOneLine.group(1).strip(), matcherOneLine.group(3).strip().split(", "));
+
+            }
+
+
+    }
+        System.out.println("Загрузка всех слов в  hashMapAllWordsFromFile завершена");
+        fileLoaded = true;
+    }
 
 
 //    static void writeLength() throws IOException {
