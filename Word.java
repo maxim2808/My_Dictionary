@@ -64,6 +64,9 @@ class  Word implements Serializable {
         return progressWord;
     };
 
+    public String wordGetKey() {
+        return wordAndTranslate.getKey();
+    }
 
     int decreaseValue(boolean firstTry, int multiplier){
         if (firstTry==true){
