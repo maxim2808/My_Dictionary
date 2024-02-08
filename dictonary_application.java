@@ -18,7 +18,7 @@ public class dictonary_application {
     static boolean fileLoaded = false;
     static Scanner scanner = new Scanner(System.in);
     //   public static List<Map.Entry<String, String[]>> listPartOfWords = new ArrayList<>();
-    static List<Word> listWord = new ArrayList<>();
+    static List<Word> listWords = new ArrayList<>();
     static String fileNameAllWords; //имя файла в котором содержатса все слова
     static String fileName = "MyTextWords.txt"; //имя файда в котором содержатся слова которые добавил в свой словарь пользователь
     static String fileLength = "length.bin";
@@ -33,7 +33,7 @@ public class dictonary_application {
     static int basicWordNumberNumber = 0;
 
 
-    static List<Word> copyListWords =  new ArrayList<>(listWord);
+    static List<Word> copyListWords =  new ArrayList<>(listWords);
 
 
     public static  int stepSize = 4;
@@ -74,13 +74,31 @@ public class dictonary_application {
 
     public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
 
+        sorting();
 
+
+    //viewMyWords();
+        //addSpecificWord();
+      //  enableDictiorary()
+        //  ;
+       // System.out.println(listWords);
+//        readAllFile();
+//        System.out.println(listWords);
+
+//checkKnowledge();
+      //enteringValues();
+//playAdvancedModKey();
       //  playSimpleModKey();
 //getWordFromFile("gift");
-//loadAllWordsInList();
-        deleteWord("peace1");
-addSpecificWord("peace1");
-        System.out.println(listWord);
+//readAllFile();
+//addSpecificWord();
+//playAdvancedModKey();
+        //playAdvancedModValue();
+        //addSpecificWord();
+        //deleteWord();
+        //сnagheWord();
+//addSpecificWord("peace6");
+        //System.out.println(listWord);
        // System.out.println(hashMapAllWordsFromFile);
 
 

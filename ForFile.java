@@ -12,7 +12,7 @@ public class ForFile {
 
     static void saveListWords() throws IOException {
         сleanFile();
-        for(Word w:listWord){
+        for(Word w: listWords){
             saveTextWord(w);
         }
         System.out.println("Файл сохранен");
@@ -34,7 +34,7 @@ public class ForFile {
     }
 
     static List<Word> readAllFile() throws FileNotFoundException {
-        listWord.removeAll(listWord);
+        listWords.removeAll(listWords);
         Scanner scanner = new Scanner(new File(fileName));
         StringBuilder line = new StringBuilder();
         while (scanner.hasNextLine()){
@@ -49,11 +49,11 @@ public class ForFile {
             int progress = Integer.parseInt(matcher.group(5));
             Map.Entry<String, String[]> entry = new AbstractMap.SimpleEntry<>(key, value);
             Word w = new Word(entry, progress);
-            listWord.add(w);
+            listWords.add(w);
 
         }
 
-        return listWord;
+        return listWords;
 
     }
 
