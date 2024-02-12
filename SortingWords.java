@@ -54,10 +54,9 @@ saveListWords();
 
 
     public static void main(String[] args) throws IOException {
-       // sortingNameA_Z();
-        //sortingNameZ_A();
+
         sortingProgress0_100();
-       // sortingProgress100_0();
+
         System.out.println(listWords);
     }
 

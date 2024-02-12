@@ -1,11 +1,14 @@
 package My_Dictonary_package;
 
+import org.w3c.dom.ls.LSOutput;
+
+import java.io.FileNotFoundException;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.*;
 
 import static My_Dictonary_package.dictonary_application.*;
-import static My_Dictonary_package.method_for_dictionary.infinityAddRandomWordPart1;
+import static My_Dictonary_package.method_for_dictionary.addRandomFordFromFile;
 
 class  Word implements Serializable {
 
@@ -49,7 +52,7 @@ class  Word implements Serializable {
     }
 
     int increaseValue(boolean firstTry, int multiplier){
-        if (firstTry){
+        if (firstTry==true){
             numberOfCorrectWords++;
             progressWord+=(stepSize*multiplier);
             if(progressWord>=100){
@@ -132,8 +135,8 @@ numberReconcilationArray[i]=number_coindences;
 
         }
 
-        System.out.println("max " + maxCoindence);
-        System.out.println("word number " + word_number);
+      //  System.out.println("max " + maxCoindence);
+      //  System.out.println("word number " + word_number);
         StringBuilder stringBuilder = new StringBuilder("");
         if(lenghHelpWord<maxCoindence){
 
@@ -156,96 +159,97 @@ numberReconcilationArray[i]=number_coindences;
 
 
         }
-       // int finallyCoindences = Math.max(lenghHelpWord, maxCoindence);
 
-
-
-
-//        int index = 0;
-//        int minLengh = Math.min(keyWord.length(), scanningWord.length());
-//        for (int i=0; i<minLengh; i++){
-//            if (keyWord.toLowerCase().charAt(i)==scanningWord.toLowerCase().charAt(i)){
-//                index++;
-//
-//            }
-//            else {
-//                break;
-//            }
-//        }
-//        int finallyIndex = Math.max(lenghHelpWord, index);
-//        StringBuilder stringBuilder = new StringBuilder("");
-//        for(int i=0; i<finallyIndex; i++){
-//            stringBuilder.append(keyWord.charAt(i));
-//
-//        }
 
     }
-
-
-
-
-
-
 
 boolean wordFromTheArrayMatches(String enteredWord){
     boolean wordFromTheArrayMatches = false;
     for (int i=0; i<this.wordAndTranslate.getValue().length; i++){
-//            System.out.println("!!!!!");
-//            System.out.println(Arrays.toString(this.wordAndTranslate.getValue()));
-//            System.out.println(this.wordAndTranslate.getValue()[i].equals(enteredWord));
-
 
         if(this.wordAndTranslate.getValue()[i].toLowerCase().equals(enteredWord)){
-
-
             wordFromTheArrayMatches = true;
             break;
-        }}
+        }
+       // System.out.println(firstCharactersMatch(this.wordAndTranslate.getValue()[i], enteredWord));
+        if (firstCharactersMatch(enteredWord, this.wordAndTranslate.getValue()[i])==true){
+           // System.out.println("1сработал метод firstCharactersMatch");
+            wordFromTheArrayMatches = true;
+            break;
+        }
+
+    }
+
 return wordFromTheArrayMatches;
     };
-
-    //delete method
-    //    List<Map.Entry<String, String[]>> fillOutTheList(Map.Entry <String, String[]> rightCouple) throws InterruptedException {
+//        public boolean oneWordHandlingFindKeyOrValue(int incomingNumber, int indexFronListWords) throws InterruptedException, FileNotFoundException {
 //        System.out.println("chooseWord is starting");
+//        listWords.get(indexFronListWords).progressWord+=10;
 //        List<Map.Entry<String, String[]>> entryList = new ArrayList<>();
+//            Map.Entry <String, String[]> rightCouple = this.wordAndTranslate;
+//
 //        entryList.add(rightCouple);
 //        for(int i=0; i<numberOfSuggestedWords-1; i++){
 //
-//            infinityAddRandomWordPart1(entryList, rightCouple);
+//            addRandomFordFromFile(entryList, rightCouple);
 //        }
-//        List<WordFromCheck> listWordFromChek = new ArrayList<>();
+//
 //        Collections.shuffle(entryList);
 //        System.out.println("\n" + "Найдите перевод");
-//        return entryList;
 //
+//            List<WordFromCheck> listWordFromChek = new ArrayList<>();
+//            if (incomingNumber==1)
+//        System.out.println(Arrays.toString(rightCouple.getValue() ) + "\n");
+//            if(incomingNumber==2)
+//                System.out.println(rightCouple.getKey()  + "\n");
+//        int index;
+//            List<WordFromCheck> listOneTrueWord = new ArrayList<>();
+//        for(int i=0; i<numberOfSuggestedWords; i++){
+//            index = i+1;
+//
+//            if(rightCouple.getKey().equals(entryList.get(i).getKey())){
+//                WordFromCheck w = new WordFromCheck(entryList.get(i), true, index);
+//                listWordFromChek.add(w);
+//                listOneTrueWord.add(w);
+//            }
+//            else listWordFromChek.add(new WordFromCheck(entryList.get(i), false, index));
+//            if(incomingNumber==1)
+//            System.out.println((index)+"."+entryList.get(i).getKey());
+//            if(incomingNumber==2)
+//                System.out.println((index)+"."+Arrays.toString(entryList.get(i).getValue()));
+//
+//        }
+//             List <List<WordFromCheck>> twoList = new ArrayList<>();
+//        twoList.add(listWordFromChek);
+//        twoList.add(listOneTrueWord);
+//            return simpleCheckWord(twoList, true, this, indexFronListWords);
+//          // return true;
 //
 //    }
 
-        public boolean oneWordHandlingFindKeyOrValue(int incomingNumber) throws InterruptedException {
+
+    public boolean oneWordHandlingFindKeyOrValue(int incomingNumber, int indexFronListWords) throws InterruptedException, FileNotFoundException {
         System.out.println("chooseWord is starting");
         List<Map.Entry<String, String[]>> entryList = new ArrayList<>();
-            Map.Entry <String, String[]> rightCouple = this.wordAndTranslate;
+        Map.Entry <String, String[]> rightCouple = this.wordAndTranslate;
 
         entryList.add(rightCouple);
         for(int i=0; i<numberOfSuggestedWords-1; i++){
 
-            infinityAddRandomWordPart1(entryList, rightCouple);
+            addRandomFordFromFile(entryList, rightCouple);
         }
 
         Collections.shuffle(entryList);
         System.out.println("\n" + "Найдите перевод");
 
-            List<WordFromCheck> listWordFromChek = new ArrayList<>();
-         //   List<Map.Entry<String, String[]>> entryList = fillOutTheList(rightCouple);
-            if (incomingNumber==1)
-        System.out.println(Arrays.toString(rightCouple.getValue() ) + "\n");
-            if(incomingNumber==2)
-                System.out.println(rightCouple.getKey()  + "\n");
+        List<WordFromCheck> listWordFromChek = new ArrayList<>();
+        if (incomingNumber==1)
+            System.out.println(Arrays.toString(rightCouple.getValue() ) + "\n");
+        if(incomingNumber==2)
+            System.out.println(rightCouple.getKey()  + "\n");
         int index;
-            List<WordFromCheck> listOneTrueWord = new ArrayList<>();
+        List<WordFromCheck> listOneTrueWord = new ArrayList<>();
         for(int i=0; i<numberOfSuggestedWords; i++){
-            //infinityAddRandomWordPart1(entryList);
-            //toStringMapEntry(entryList.get(i));
             index = i+1;
 
             if(rightCouple.getKey().equals(entryList.get(i).getKey())){
@@ -255,19 +259,35 @@ return wordFromTheArrayMatches;
             }
             else listWordFromChek.add(new WordFromCheck(entryList.get(i), false, index));
             if(incomingNumber==1)
-            System.out.println((index)+"."+entryList.get(i).getKey());
+                System.out.println((index)+"."+entryList.get(i).getKey());
             if(incomingNumber==2)
                 System.out.println((index)+"."+Arrays.toString(entryList.get(i).getValue()));
 
         }
-        //return checkWord(rightCouple);
-             List <List<WordFromCheck>> twoList = new ArrayList<>();
+        List <List<WordFromCheck>> twoList = new ArrayList<>();
         twoList.add(listWordFromChek);
         twoList.add(listOneTrueWord);
-    //return twoList;
-            return simpleCheckWord(twoList, true);
+        return simpleCheckWord(twoList, true, this, indexFronListWords);
+
 
     }
+
+static boolean firstCharactersMatch(String entetedWord, String word2){
+        if (entetedWord.length()<word2.length()){return  false;}
+        boolean rezult = true;
+        entetedWord = entetedWord.toLowerCase();
+        word2 = word2.toLowerCase();
+        int minLength = Math.min(entetedWord.length(), word2.length());
+        for (int i = 0; i<minLength; i++){
+           // System.out.println("для теста, выодим каждый символ " + entetedWord.charAt(i) + " " + word2.charAt(i));
+            if(entetedWord.charAt(i)!=word2.charAt(i)){
+                rezult = false;
+            }
+        }
+        return rezult;
+
+}
+
     public boolean oneWordHandlingKeyForDifficultMethod (){
         String [] copyArray = this.wordAndTranslate.getValue();
         Collections.shuffle(Arrays.asList(copyArray));
@@ -288,25 +308,21 @@ return wordFromTheArrayMatches;
 
 
 
-
-//    public boolean oneWordHandlingFindValue() throws InterruptedException {
-//        Map.Entry <String, String[]> rightCouple = this.wordAndTranslate;
-//        List<WordFromCheck> listWordFromChek = new ArrayList<>();
-//        List<Map.Entry<String, String[]>> entryList = fillOutTheList(rightCouple);
-//        System.out.println(rightCouple.getKey() + "\n");
-//    }
+    private boolean simpleCheckWord(List <List<WordFromCheck>> listWordFromCheck, boolean first_try, Word w, int indexFromListWords){
 
 
-
-
-    private boolean simpleCheckWord(List <List<WordFromCheck>> listWordFromCheck, boolean first_try){
-        System.out.println("Please, enter a word");
+        //System.out.println("Please, enter a word");
+        System.out.println("Введите слово");
         String enteredWord = scanner.nextLine().toLowerCase();
         WordFromCheck trueWord = listWordFromCheck.get(1).get(0);
         Map.Entry<String, String[]> rightCouple = trueWord.getEntry();
         if(enteredWord.equals(String.valueOf(trueWord.index))){
-            System.out.println("Вы правы, правильное слово " + rightCouple.getKey());
-            increaseValue(first_try, 1);
+
+           // System.out.println(w.progressWord);
+            w.increaseValue(first_try, 1);
+           // System.out.println(listWords.get(indexFromListWords) + " увлечиваем прогрессворд ");
+           // System.out.println(w.progressWord);
+            System.out.println("Вы правы, правильное слово " + rightCouple.getKey() + " " + progressWord); //убрать progressWord
             //numberOfCorrectWords++;
             return true;
         }
@@ -314,23 +330,24 @@ return wordFromTheArrayMatches;
         for (WordFromCheck wfch:listAllChekWord){
             if (enteredWord.equals(String.valueOf(wfch.index))){
                 System.out.println("Неверный ответ, попробуйте ещё раз");
-                decreaseValue(false, 1);
+                w.decreaseValue(false, 1);
                 //numberOfIncorrectAnswers++;
-                return simpleCheckWord(listWordFromCheck, false);
+                return simpleCheckWord(listWordFromCheck, false, w, indexFromListWords);
             }
         }
         System.out.println("Нет такого слова, попробуйте еще раз");
-        //decreaseValue();
-        return simpleCheckWord(listWordFromCheck, first_try);
+        return simpleCheckWord(listWordFromCheck, first_try, w, indexFromListWords);
 
 
     };
 
 
     private boolean advancedCheckWord(StringBuilder s, int index, boolean first_try, String mode ){
-        System.out.println("Mode " + mode);
+       // System.out.println("Mode " + mode);
         StringBuilder helpWord = new StringBuilder(s);
-        System.out.println("Please, enter a word");
+        System.out.println("Введите слово");
+       // System.out.println("Please, enter a word");
+
         String enteredWord = scanner.nextLine().toLowerCase();
         String trueKey;
         trueKey = this.wordAndTranslate.getKey();
@@ -341,25 +358,22 @@ return wordFromTheArrayMatches;
             increaseValue(first_try, 2);
             return true;
         }
+        if (firstCharactersMatch(enteredWord, trueKey)==true){
+            //System.out.println("сработал метод firstCharactersMatch");
+            System.out.println("Вы правы, правильное слово " + trueKey);
+            increaseValue(first_try, 2);
+            return true;
+                    }
         };
+
+
+
+
         if(mode.equals("value"))
         {
-          //  System.out.println("value starting");
         boolean Matches = wordFromTheArrayMatches(enteredWord);
-//        for (int i=0; i<this.wordAndTranslate.getValue().length; i++){
-////            System.out.println("!!!!!");
-////            System.out.println(Arrays.toString(this.wordAndTranslate.getValue()));
-////            System.out.println(this.wordAndTranslate.getValue()[i].equals(enteredWord));
-//
-//
-//            if(this.wordAndTranslate.getValue()[i].toLowerCase().equals(enteredWord)){
-//
-//
-//                wordFromTheArrayMatches = true;
-//                break;
-//            }
-//        }
-            System.out.println("Есть совпадение " + Matches);
+
+           // System.out.println("Есть совпадение " + Matches);
 
         if (Matches==true){
             System.out.println("Вы правы, правильный перевод " + Arrays.toString(this.wordAndTranslate.getValue()));
@@ -400,16 +414,14 @@ return wordFromTheArrayMatches;
             index = helpWord.length();
             helpWord.append(trueKey.charAt(index));
             index++;
-            System.out.println(helpWord);
+            System.out.println("Подсказка " +helpWord);
             decreaseValue(first_try, 1);
 
             if (helpWord.toString().equals(trueKey)) {
 
                 System.out.println("Правильное слово " + trueKey);
 
-//                increaseValue();
-//                increaseValue();
-//                numberOfCorrectWords++;}
+
                 return true;
             }
 
@@ -422,13 +434,22 @@ return wordFromTheArrayMatches;
 
             if(mode=="value"){
                 Map.Entry <Integer, StringBuilder> entry = patrialReconcilationValue(enteredWord, index);
+
                 helpWord = entry.getValue();
                 index = helpWord.length();
                 int word_number = entry.getKey();
                 if(this.wordAndTranslate.getValue().length>0) {
-                    helpWord.append(this.wordAndTranslate.getValue()[word_number].charAt(index));
+                   // helpWord.append(this.wordAndTranslate.getValue()[word_number].charAt(index)); //слово single сломалось при наборе "одинокий" индекс 4 из 4
+try {
+    helpWord.append(this.wordAndTranslate.getValue()[word_number].charAt(index)); //слово single сломалось при наборе "одинокий" индекс 4 из 4
+}
+catch (StringIndexOutOfBoundsException e){
+    System.out.println("Правильный перевод " + Arrays.toString(this.wordAndTranslate.getValue()));
+    return true;
+}
+
                     index++;
-                    System.out.println(helpWord);
+                    System.out.println("Подсказка " + helpWord);
                     decreaseValue(first_try, 1);
                     for(int i=0; i<this.wordAndTranslate.getValue().length; i++){
 
@@ -436,7 +457,7 @@ return wordFromTheArrayMatches;
 
 
                     }
-                    System.out.println();
+                  //  System.out.println();
                     if (wordFromTheArrayMatches(helpWord.toString().toLowerCase())==true) {
 
 
