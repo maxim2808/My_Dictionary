@@ -10,12 +10,14 @@ import static My_Dictonary_package.dictonary_application.*;
 public class ForFile {
     static Pattern patternForAllWords = Pattern.compile("(.+)(\\[.*])(.+)(Войти)");
 
+
+
     static void saveListWords() throws IOException {
         сleanFile();
         for(Word w: listWords){
             saveTextWord(w);
         }
-        System.out.println("Файл сохранен");
+        //System.out.println("Файл сохранен");
 
     }
 
@@ -33,10 +35,21 @@ public class ForFile {
         fileWriter.close();
     }
 
-    static List<Word> readAllFile() throws FileNotFoundException {
-        System.out.println("Файл прочитан");
+    static List<Word> readAllFile() throws IOException {
+       // System.out.println("Файл прочитан");
         listWords.removeAll(listWords);
-        Scanner scanner = new Scanner(new File(fileName));
+        File fileNew;
+        try {
+            Scanner scanner = new Scanner(new File(fileName));
+        }
+        catch (FileNotFoundException e){
+             fileNew = new File(fileName);
+             FileWriter fileWriter = new FileWriter(fileNew);
+             fileWriter.write("guitar,,-,,Гитара,,,,---0");
+        fileWriter.close();
+        }
+        fileNew = new File(fileName);
+        Scanner scanner = new Scanner(fileNew);
         StringBuilder line = new StringBuilder();
         while (scanner.hasNextLine()){
             line.append(scanner.nextLine());
@@ -57,12 +70,54 @@ public class ForFile {
         return listWords;
 
     }
+    static void createParametrsFile() throws IOException {
+        File fileParamerts = new File(nameFileParametrs);
+        FileWriter fileWriterParametrs = new FileWriter(fileParamerts);
+        fileWriterParametrs.write("sorting=1");
+        fileWriterParametrs.close();
+    }
+    static void readSorting() throws IOException {
+       // Scanner scannerParamerts;
+        try {
+             Scanner scannerParamerts = new Scanner(new File(nameFileParametrs));
+        }
+        catch (FileNotFoundException e){
+            createParametrsFile();
+        }
+        Scanner scannerParamerts = new Scanner(new File(nameFileParametrs));
+        Pattern patternSorting = Pattern.compile("sorting=(\\d)");
+        while (scannerParamerts.hasNextLine()){
+            String oneline = scannerParamerts.nextLine();
+            Matcher matcherSorting = patternSorting.matcher(oneline);
+            while (matcherSorting.find()){
+                typeSorting=Integer.parseInt(matcherSorting.group(1));
+            }
 
+        }
+    }
+    static void writeSorting(int typeSorting) throws IOException {
+        try {
+            Scanner scannerParamerts = new Scanner(new File(nameFileParametrs));
+        }
+        catch (FileNotFoundException e){
+            createParametrsFile();
+        }
+
+        StringBuilder stringBuilder = new StringBuilder("sorting=").append(typeSorting);
+
+
+                FileWriter fileWriter= new FileWriter(nameFileParametrs);
+                fileWriter.write(String.valueOf(stringBuilder));
+                fileWriter.close();
+
+
+
+    }
     static void сleanFile() throws IOException {
         FileWriter fileWriter = new FileWriter(fileName);
         fileWriter.write("");
         fileWriter.close();
-        System.out.println("Файл очищен");
+        //System.out.println("Файл очищен");
     }
 
 
@@ -88,6 +143,12 @@ public class ForFile {
     }
 
     static void loadAllWordsInList() throws FileNotFoundException {
+        try {
+            Scanner scannerGetWordFromFile = new Scanner(fileAllWordTxt);
+        }
+       catch (FileNotFoundException e){
+           System.out.println("Не возможно подключиться в базе слов, попробуйте устранить проблему " + e.getMessage());
+       }
         Scanner scannerGetWordFromFile = new Scanner(fileAllWordTxt);
         while (scannerGetWordFromFile.hasNextLine()){
             String oneline = scannerGetWordFromFile.nextLine();
@@ -102,8 +163,8 @@ public class ForFile {
 
 
     }
-        System.out.println("Загрузка всех слов в  hashMapAllWordsFromFile завершена");
-        fileLoaded = true;
+       // System.out.println("Загрузка всех слов в  hashMapAllWordsFromFile завершена");
+        fileAllWordLoaded = true;
     }
 
 

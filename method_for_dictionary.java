@@ -1,7 +1,5 @@
 package My_Dictonary_package;
 
-import org.w3c.dom.ls.LSOutput;
-
 import java.io.*;
 import java.util.*;
 
@@ -156,7 +154,26 @@ public class method_for_dictionary {
     }
 
     //Просмотр всех слов в listWord
-    static void viewMyWords() throws FileNotFoundException {
+    static void viewMyWords() throws IOException {
+        readSorting();
+        switch (typeSorting) {
+            case 1:
+                sortingNameA_Z();
+                break;
+            case 2:
+                sortingNameZ_A();
+                break;
+            case 3:
+                sortingProgress0_100();
+                break;
+            case 4:
+                sortingProgress100_0();
+                break;
+            default:
+                sortingNameA_Z();
+                break;
+        }
+
      //   readAllFile();
         for (Word word:listWords){
             System.out.println(word);
@@ -199,7 +216,7 @@ public class method_for_dictionary {
 
 
     static boolean scanningForAddSpecicificWord(Map.Entry<String, String[]> entry, boolean isCalled) throws IOException {
-        System.out.println("Начало метода scanningForAddSpecicificWord ");
+        //System.out.println("Начало метода scanningForAddSpecicificWord ");
         String scanner1or2 = scanner.nextLine();
         if (scanner1or2.equals("1")) {
             Map.Entry<String, String[]> entry2 = new AbstractMap.SimpleEntry<>(entry.getKey(), entry.getValue());
@@ -207,12 +224,12 @@ public class method_for_dictionary {
             System.out.println(" Слово " + entry.getKey() + " было добавоено в словарь ");
             listWords.add(w1);
             saveTextWord(w1);
-            System.out.println("scanningForAddSpecicificWord конец метода 1 ");
+            //System.out.println("scanningForAddSpecicificWord конец метода 1 ");
             return true;
         } else if (scanner1or2.equals("2")) {
             System.out.println("Вы хотите ввестри перевод вручную? \n1.Да \n2.Нет ");
             scanningForAddSpecicificWordPart2(entry.getKey());
-            System.out.println("scanningForAddSpecicificWord конец метода 2 ");
+            //System.out.println("scanningForAddSpecicificWord конец метода 2 ");
             return true;
         } else {
             return scanningForAddSpecicificWord(entry, isCalled);
@@ -235,9 +252,10 @@ public class method_for_dictionary {
                 return;
             }
         }
-        if (fileLoaded == false) {
+        if (fileAllWordLoaded == false) {
             loadAllWordsInList();
         }
+        boolean wordIsPresent = false;
         for (Map.Entry<String, String[]> entry : hashMapAllWord.entrySet()) {
 
             if (word.equals(entry.getKey())) {
@@ -247,14 +265,17 @@ public class method_for_dictionary {
                 listWords.add(w1);
                 saveTextWord(w1);
                 System.out.println("Слово " + word + " было добавлено в словарь");
+
                 return;
             }
         }
-        System.out.println("Кажется в нашей базе нет слова " + word);
+        //System.out.println(wordIsPresent);
+     //  if (wordIsPresent==false){System.out.println("Кажется в нашей базе нет слова " + word);};
 
         for (Map.Entry<String, String[]> entry : hashMapAllWordsFromFile.entrySet()) {
             if (word.toLowerCase().equals(entry.getKey())) {
-
+               wordIsPresent = true;
+               // System.out.println(wordIsPresent);
                 System.out.println(entry.getKey() + "-" + Arrays.toString(entry.getValue()));
                 System.out.println("Вы хотите добавить это слово: \n1.Да \n2.Нет ");
 
@@ -263,8 +284,9 @@ public class method_for_dictionary {
 
             }
         }
+            if( wordIsPresent == false){System.out.println("Кажется в нашей базе нет слова " + word);}
         if (scanningIsCalled == false) {
-            System.out.println("Конец метода");
+            //System.out.println("Конец метода");
             System.out.println("Вы хотите добавить новое слово вручную? \n1.Да \n2.Нет");
 
             // Map.Entry<String, String[]> entry = new AbstractMap.SimpleEntry<>(word, transformingLineToArray(array));
@@ -283,7 +305,8 @@ public class method_for_dictionary {
                                               ) throws InterruptedException {
         if(numberOfFailedAttempts>50){
             continueAddRandom = false;
-            System.out.println("Прерывание метода addRandomWord " + numberOfFailedAttempts);
+            //System.out.println("Прерывание метода addRandomWord " + numberOfFailedAttempts);
+            System.out.println("Возникли проблемы с добавлением рандомных слов, операция преравана");
             return numberOfFailedAttempts; }
 
         boolean containWord = false;
@@ -365,11 +388,11 @@ public class method_for_dictionary {
         if (wordPresentInList==false){
 
             entryList.add(entry);
-            System.out.println("Было добавлено слово " + entry.getKey());
+           // System.out.println("Было добавлено слово " + entry.getKey());
             return entry;
         }
         else {
-            System.out.println("Не получилось добавить слово " + entry.getKey());
+         //   System.out.println("Не получилось добавить слово " + entry.getKey());
             Thread.sleep(1);
             //  Thread.sleep(25);
 
@@ -383,47 +406,6 @@ public class method_for_dictionary {
         }
 
     }
-//    public static Map.Entry<String, String[]> addRandomFordFromFile(List<Map.Entry<String, String[]>> entryList, Map.Entry<String, String[]> keyWord)
-//            throws InterruptedException, FileNotFoundException {
-//        if(fileLoaded==false){
-//            readAllFile();}
-//        int random_int = r.nextInt(listWords.size());
-//        String key = listWords.get(random_int).wordAndTranslate.getKey();
-//        String[] value = listWords.get(random_int).wordAndTranslate.getValue();
-//
-//        Map.Entry<String, String[]> entry = new AbstractMap.SimpleEntry<>(key, value);
-//        boolean rezult = entry.getKey().equals(keyWord.getKey());
-//
-//        if (entry.getKey().equals(keyWord.getKey())) {
-//            return addRandomFordFromFile(entryList, keyWord);
-//        };
-//        boolean wordPresentInList = false;
-//        for(Map.Entry<String, String[]> entryFromList:entryList){
-//            if (entryFromList.getKey().equals(entry.getKey())){
-//                wordPresentInList = true;
-//            }
-//        }
-//        if (wordPresentInList==false){
-//
-//            entryList.add(entry);
-//            System.out.println("Было добавлено слово " + entry.getKey());
-//            return entry;
-//        }
-//        else {
-//            System.out.println("Не получилось добавить слово " + entry.getKey());
-//            Thread.sleep(1);
-//            //  Thread.sleep(25);
-//
-//            try {
-//                return addRandomFordFromFile(entryList, keyWord);
-//            } catch (StackOverflowError e) {
-//                System.out.println("!!!!!!!!!");
-//                Thread.sleep(500);
-//                return null;
-//            }
-//        }
-//
-//    }
 
 
     public static void addMuchWords() throws InterruptedException, IOException {
@@ -439,7 +421,7 @@ public class method_for_dictionary {
             return;
             //доделать метод через сканнер
         }
-        if (fileLoaded == false) {
+        if (fileAllWordLoaded == false) {
             loadAllWordsInList();
         }
         ;
@@ -455,15 +437,16 @@ public class method_for_dictionary {
     }
 
     static void playSimpleModKey() throws InterruptedException, IOException {
+        scanner.nextLine();
        // readAllFile();
-        if (fileLoaded==false){readAllFile();}
+       // if (fileLoaded==false){readAllFile();}
         if (listWords.size()>=numberOfSuggestedWords) {
            // readAllFile();
             numberOfCorrectWords = 0;
             numberOfIncorrectAnswers = 0;
             Collections.shuffle(listWords); //вернуть после теста
 
-            System.out.println("Тест начался");
+            System.out.print("Тест начался, для выбора слова введите цифру и нажмите Enter");
 
 
             for (int i = 0; i < listWords.size(); i++) {
@@ -483,12 +466,13 @@ public class method_for_dictionary {
     }
 
     static void playSimpleModValue() throws InterruptedException, IOException {
+        scanner.nextLine();
         if (listWords.size()>=numberOfSuggestedWords) {
           //  if (fileLoaded==false){readAllFile();}
             numberOfCorrectWords = 0;
             numberOfIncorrectAnswers = 0;
             Collections.shuffle(listWords);
-            System.out.println("Тест начался");
+            System.out.print("Тест начался, для выбора слова введите цифру и нажмите Enter");
             for (int i = 0; i < listWords.size(); i++) {
                 listWords.get(i).oneWordHandlingFindKeyOrValue(2, i);
             }
@@ -500,13 +484,13 @@ public class method_for_dictionary {
     }
 
     static void playAdvancedModKey() throws InterruptedException, IOException {
-
+        scanner.nextLine();
        // if (fileLoaded==false){readAllFile();}
         numberOfCorrectWords = 0;
         numberOfIncorrectWords = 0;
         numberOfIncorrectAnswers = 0;
-      //  Collections.shuffle(listWords);
-        System.out.println("Тест начался");
+        Collections.shuffle(listWords);
+        System.out.println("Тест начался, вам нужно ввести английское слово, если вы не знаете ответ можете ввести 'help' ");
         for (int i = 0; i < listWords.size(); i++) {
             listWords.get(i).oneWordHandlingKeyForDifficultMethod();
         }
@@ -523,7 +507,7 @@ public class method_for_dictionary {
         numberOfIncorrectWords = 0;
         numberOfIncorrectAnswers = 0;
         Collections.shuffle(listWords);
-        System.out.println("Тест начался");
+        System.out.println("Тест начался, вам нужно ввести один из переводов слова, если вы не знаете ответ можете ввести 'help' ");
         for (int i = 0; i < listWords.size(); i++) {
             listWords.get(i).oneWordHandlingValueForDifficultMethod();
         }
@@ -534,7 +518,7 @@ public class method_for_dictionary {
     }
 
     static void enableDictiorary() throws IOException, InterruptedException, ClassNotFoundException {
-        if(fileLoaded==false){readAllFile();};
+        if(fileAllWordLoaded ==false){readAllFile();};
         System.out.println("1.Проверить знания \n2.Добавить новое слово \n3.Редактировать слово \n4.Удалить слово" +
                 " \n5.Просмотр моих слов\n6.Выбрать сортировку слов \n7.Особые возможности\n9.Выйтм");
         int custom_input = 0;
@@ -570,7 +554,7 @@ public class method_for_dictionary {
             enableDictiorary();
             return;
         }
-        System.out.println("Финальный метод"); //удалить sout
+       // System.out.println("Финальный метод");
         enableDictiorary();
 
     }
@@ -629,15 +613,19 @@ public class method_for_dictionary {
         switch (custom_input){
             case 1:
                 sortingNameA_Z();
+                writeSorting(1);
                 break;
             case 2:
                 sortingNameZ_A();
+                writeSorting(2);
                 break;
             case 3:
                 sortingProgress0_100();
+                writeSorting(3);
                 break;
             case 4:
                 sortingProgress100_0();
+                writeSorting(4);
                 break;
             case 5:
                 return;
